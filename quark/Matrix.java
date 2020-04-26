@@ -4,6 +4,7 @@ public class Matrix {
     protected int matrix[][];
     private int row,col;
     public Matrix(int rows,int columns){
+        // defines a matrix
         this.row = rows;
         this.col = columns;
         this.matrix = new int[row][col];
