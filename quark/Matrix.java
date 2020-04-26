@@ -93,14 +93,18 @@ public class Matrix {
     }
     public static Matrix Multiply(Matrix...v){
         Matrix y = v[0];
+        // we have n numbers of matrix to multiply to each other
         for(int i = 0; i<v.length-1;i++){
             if(y.GetTotalRow()==v[i+1].GetTotalColumn()&&v[i+1].GetTotalColumn()==y.GetTotalRow()){
                 for(int k = 1;k<=y.GetTotalRow();k++){
                     int row[] = y.GetRow(k);
+                    // taking row of the first matrix
                     for(int j = 1;j<=y.GetTotalColumn();j++){
+                        // taking column of the second matrix
                         int col[] = v[i+1].GetCol(j);
                         int sum = 0;
                         for(int z = 0;z<row.length;z++){
+                            // multplying and adding them up
                             sum += col[z] * row[z];
                         }
                         y.Values(k, j,sum);
