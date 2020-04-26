@@ -81,7 +81,7 @@ public class Matrix {
         return y;
         
     }
-    public static Matrix Multiply(int k,Matrix x){
+    public static Matrix Multiply(double k,Matrix x){
         for(int i =1; i<=x.GetTotalRow();i++){
             for(int j = 1;j<=x.GetTotalColumn();j++){
                 x.Values(i, j,x.ValuesAt(i, j) * k);
