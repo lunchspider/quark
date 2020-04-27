@@ -12,10 +12,10 @@ public class Matrix {
         // creates a square matrix of given order
             this(order,order);
     }
-    public Matrix(double m[][]){
-        this.matrix = m;
-        this.row = m.length;
-        this.col = m[0].length;
+    public Matrix(double matrix[][]){
+        this.matrix = matrix;
+        this.row = matrix.length;
+        this.col = matrix[0].length;
     }
     public int GetTotalRow(){
         return this.row;
@@ -76,6 +76,17 @@ public class Matrix {
         }
         return y;
     }
+    // returns a sub matrix of given order
+    public Matrix SubMatrix(Matrix y,int StartRow,int StartColumn,int EndRow,int EndColumn){
+        Matrix z = new Matrix(EndRow-StartColumn +1,EndColumn-StartColumn +1);
+        for(int i = StartRow;i<=EndRow;i++){
+            for(int j = StartColumn;j<=EndColumn;j++){
+                z.Value(i-StartRow+1,j-StartColumn+1,y.Get(i,j));
+            }
+        }
+        return z;
+    }
+
     public double Det(Matrix y){
 
         return 0;
