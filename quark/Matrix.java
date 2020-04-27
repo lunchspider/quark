@@ -10,7 +10,7 @@ public class Matrix {
     }
     public  Matrix(int order){
         // creates a square matrix of given order
-        this(order,order);
+            this(order,order);
     }
     public Matrix(double m[][]){
         this.matrix = m;
@@ -25,7 +25,7 @@ public class Matrix {
     }
     public double[] GetRow(int n){
         if(n>row || n<1){
-            return null;
+            throw new IllegalArgumentException("Dimensions out of bound.");
         }
         else{
             return this.matrix[n-1];
@@ -33,7 +33,7 @@ public class Matrix {
     }
     public double[] GetCol(int n){
         if(n>col|| n<1){
-            return null;
+            throw new IllegalArgumentException("Dimensions out of bound.");
         }
         else{
             double s[]= new double[this.col];
@@ -42,17 +42,17 @@ public class Matrix {
             return s;
         }
     }
-    public void Values(int rows,int columns,double value){
+    public void Value(int rows,int columns,double val){
         if(rows-1>this.row || columns-1>this.col|| rows<1||columns<1){
-            return;
+            throw new IllegalArgumentException("Dimension out of bound.");
         }
         else{
-            this.matrix[rows-1][columns-1] = value;
+            this.matrix[rows-1][columns-1] = val;
         }
     }
-    public double ValuesAt(int n,int j){
+    public double Get(int n,int j){
         if(n-1>this.row || j-1>this.col|| j<1||n<1){
-            return 0;
+            throw new IllegalArgumentException("Dimensions out of bound.");
         }
         else{
             return this.matrix[n-1][j-1];
@@ -62,7 +62,17 @@ public class Matrix {
         // return a matrix with all elements equal 1
         Matrix y = new Matrix(order);
         for(int i = 1;i<=order;i++){
-            y.Values(i, i, 1);
+            y.Value(i, i, 1);
+        }
+        return y;
+    }
+    // Return a Identity Matrix of matrix of nxj where only diagonal elements are 1
+    public static Matrix IdentityMatrix(int n,int j){
+        Matrix y = new Matrix(n,j);
+        for(int i =1;i<=n;i++){
+            for(int k = 1;k<=n;k++){
+                if(i==k){ y.Value(i, j,1);}
+            }
         }
         return y;
     }
