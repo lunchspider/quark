@@ -1,21 +1,41 @@
 package quark;
-
 public class Matrix {
     private double matrix[][];
     private int row,col;
     public Matrix(int rows,int columns){
         this.row = rows;
         this.col = columns;
-        this.matrix = new double[row][col];
+        this.matrix = new double[this.row][this.col];
     }
     public  Matrix(int order){
         // creates a square matrix of given order
-            this(order,order);
+        this(order,order);
     }
-    public Matrix(double matrix[][]){
-        this.matrix = matrix;
-        this.row = matrix.length;
-        this.col = matrix[0].length;
+    public Matrix(double matr[][]){
+        this(matr.length,matr[0].length);
+        this.matrix = matr;
+    }
+    public Matrix(double matr[]){
+        this(1,matr.length);
+        for(int i =1;i<=this.col;i++){
+            this.Value(1,i,matr[i-1]);
+        }
+    }
+    public Matrix(int matr[][]){
+        // creates the Matrix if an int array in given
+        this(matr.length,matr[0].length);
+        for(int i = 0;i<this.row;i++){
+            for(int j = 0;j<this.col;j++){
+                this.matrix[i][j] = matr[i][j];
+            }
+        }
+    }
+    public Matrix(int matr[]){
+        // creates the Matrix if only one row is given
+        this(1,matr.length);
+        for(int i =1;i<=this.col;i++){
+            this.Value(1,i,matr[i-1]);
+        }
     }
     public int GetTotalRow(){
         return this.row;
@@ -23,7 +43,7 @@ public class Matrix {
     public int GetTotalColumn(){
         return this.col;
     }
-    public double[] GetRow(int n){
+    public double[] PullRow(int n){
         if(n>row || n<1){
             throw new IllegalArgumentException("Dimensions out of bound.");
         }
@@ -31,7 +51,7 @@ public class Matrix {
             return this.matrix[n-1];
         }
     }
-    public double[] GetCol(int n){
+    public double[] PullCol(int n){
         if(n>col|| n<1){
             throw new IllegalArgumentException("Dimensions out of bound.");
         }
@@ -58,6 +78,43 @@ public class Matrix {
             return this.matrix[n-1][j-1];
         }
     }
+    public void PushRow(double GivenRow[]){
+        //pushes a row at the end of the matrix
+        if(this.col!= GivenRow.length){
+            throw new IllegalArgumentException("Dimensions of the given row does not match the number of rows in the matrix.");
+        }
+        else{
+            this.row++;
+            double y[][] = new double[this.row][this.col];
+            for(int i = 0;i<this.row-1;i++){
+                for(int j = 0;j<this.col;j++){
+                    y[i][j] = this.matrix[i][j];
+                }
+            }
+            this.matrix = y;
+            for(int i = 0;i<this.col;i++){
+                this.matrix[this.row-1][i] = GivenRow[i];
+            }
+        }
+    }
+    public void PushColumn(double GivenColumn[]){
+        if(this.row != GivenColumn.length){
+            throw new IllegalArgumentException("Dimensions of the given row does not match the number of rows in the matrix.");
+        }
+        else{
+            this.col++;
+            double y[][] =new double[this.row][this.col];
+            for(int i = 0;i<this.row;i++){
+                for(int j = 0;j<this.col-1;j++){
+                    y[i][j] = this.matrix[i][j];
+                }
+            }
+            this.matrix = y;
+            for(int i =0;i<this.row-1;i++){
+                this.matrix[i][this.col-1] = GivenColumn[i];
+            }
+        }
+    }
     public static Matrix IndentityMatrix(int order){
         // return a matrix with all elements equal 1
         Matrix y = new Matrix(order);
@@ -66,8 +123,8 @@ public class Matrix {
         }
         return y;
     }
-    // Return a Identity Matrix of matrix of nxj where only diagonal elements are 1
     public static Matrix IdentityMatrix(int n,int j){
+        // Return a Identity Matrix of matrix of nxj where only diagonal elements are 1
         Matrix y = new Matrix(n,j);
         for(int i =1;i<=n;i++){
             for(int k = 1;k<=n;k++){
@@ -76,8 +133,8 @@ public class Matrix {
         }
         return y;
     }
-    // returns a sub matrix of given order
     public Matrix SubMatrix(Matrix y,int StartRow,int StartColumn,int EndRow,int EndColumn){
+        // returns a sub matrix of given order
         Matrix z = new Matrix(EndRow-StartColumn +1,EndColumn-StartColumn +1);
         for(int i = StartRow;i<=EndRow;i++){
             for(int j = StartColumn;j<=EndColumn;j++){
