@@ -12,6 +12,11 @@ public class Matrix {
         // creates a square matrix of given order
         this(order,order);
     }
+    public Matrix(double m[][]){
+        this.matrix = m;
+        this.row = m.length;
+        this.col = m[0].length;
+    }
     public int GetTotalRow(){
         return this.row;
     }
