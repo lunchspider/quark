@@ -1,6 +1,6 @@
 package quark;
 
-public class Arithmethics {
+public class Operations{
     public static Matrix Add(Matrix...v){
         // Adds two matrices with same order 
         try{
