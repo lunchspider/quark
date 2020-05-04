@@ -24,6 +24,19 @@ public class Operations{
             throw new ArrayIndexOutOfBoundsException("Can only add matrices of same order.");
         }
     }
+    public static Matrix Add(double k,Matrix v){
+    	// adds <code> double k</code> to every number of the matrix
+    	try{
+    		for(int i = 1;i<=v.GetTotalRow();i++){
+    			for(int j =1;j<=v.GetTotalColumn();j++){
+    				v.Value(i,j,v.Get(i,j)+k);
+    			}
+    		}
+    		return v;
+    	} catch(ArrayIndexOutOfBoundsException e){
+    		throw new ArrayIndexOutOfBoundsException("Can only add matrices of same order.");
+    	}
+    }
     public static Matrix Multiply(double k,Matrix x){
         for(int i =1; i<=x.GetTotalRow();i++){
             for(int j = 1;j<=x.GetTotalColumn();j++){
