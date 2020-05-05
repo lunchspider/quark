@@ -1,5 +1,6 @@
 package quark;
-public class Matrix {
+public class Matrix implements java.io.Serializable{
+	private static final long serialVersionUID = 1L;
     private double matrix[][];
     private int row,col;
     public Matrix(int rows,int columns){
@@ -37,6 +38,9 @@ public class Matrix {
             this.Value(1,i,matr[i-1]);
         }
     }
+    public double[][] Pull(){
+    	return matrix;
+    }
     public int GetTotalRow(){
         return this.row;
     }
@@ -44,6 +48,7 @@ public class Matrix {
         return this.col;
     }
     public double[] PullRow(int n){
+    	// return a row of the given number
         if(n>row || n<1){
             throw new IllegalArgumentException("Dimensions out of bound.");
         }
@@ -52,6 +57,7 @@ public class Matrix {
         }
     }
     public double[] PullCol(int n){
+    	// returns the column of given number
         if(n>col|| n<1){
             throw new IllegalArgumentException("Dimensions out of bound.");
         }
