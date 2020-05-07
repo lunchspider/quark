@@ -1,5 +1,6 @@
 package quark;
 import java.util.Arrays;
+import java.lang.Math;
 public class Matrix implements java.io.Serializable{
 	private static final long serialVersionUID = 1L;
     private double matrix[][];
@@ -153,7 +154,7 @@ public class Matrix implements java.io.Serializable{
     // returns a string of all the elements in a matrix seprated by every row.
     public String Print(){
         String str = new String();
-        for(double[] a : matrix){
+        for(double[] a : this.matrix){
             str +=Arrays.toString(a);
             str+="\n";
         }
@@ -162,12 +163,30 @@ public class Matrix implements java.io.Serializable{
     // returns a string of the given Matrix
     public String toString(){
         String str ="[";
-        for(double[] a : matrix){
+        for(double[] a : this.matrix){
             str += Arrays.toString(a);
             str+=",";
         }
         str+="]";
         return str;
+    }
+    //return a long[][] whicn is rounded of version of the matrix
+    public long[][] roundOff(){
+        long[][] n = new long[this.row][this.row];
+        for(int i = 0;i<this.row;i++){
+            for(int j = 0;j<this.col;j++){
+                n[i][j] = Math.round(this.matrix[i][j]);
+            }
+        }
+        return n;
+    }
+    // rounds of the every element of the matrix
+    public void round(){
+        for(int i = 0;i<this.row;i++){
+            for(int j = 0;j<this.col;j++){
+                this.matrix[i][j] = Math.round(this.matrix[i][j]);
+            }
+        }
     }
     public double Det(Matrix y){
 
