@@ -1,4 +1,5 @@
 package quark;
+import java.util.Arrays;
 public class Matrix implements java.io.Serializable{
 	private static final long serialVersionUID = 1L;
     private double matrix[][];
@@ -149,7 +150,15 @@ public class Matrix implements java.io.Serializable{
         }
         return z;
     }
-
+    // returns a string of all the elements in a matrix
+    public String Print(){
+        String str = new String();
+        for(double[] a : matrix){
+            str +=Arrays.toString(a);
+            str+="\n";
+        }
+        return str;
+    }
     public double Det(Matrix y){
 
         return 0;
