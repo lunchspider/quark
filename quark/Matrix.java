@@ -150,13 +150,23 @@ public class Matrix implements java.io.Serializable{
         }
         return z;
     }
-    // returns a string of all the elements in a matrix
+    // returns a string of all the elements in a matrix seprated by every row.
     public String Print(){
         String str = new String();
         for(double[] a : matrix){
             str +=Arrays.toString(a);
             str+="\n";
         }
+        return str;
+    }
+    // returns a string of the given Matrix
+    public String toString(){
+        String str ="[";
+        for(double[] a : matrix){
+            str += Arrays.toString(a);
+            str+=",";
+        }
+        str+="]";
         return str;
     }
     public double Det(Matrix y){
