@@ -69,7 +69,7 @@ public class Operations{
         }
        return Product;
     }
-    public static Matrix ScalerDivide(double k,Matrix v){
+    public static Matrix ScalerDivideLeft(double k,Matrix v){
         // right divides every elements in the matrix
     	double y[][] = v.Pull();
     	for(int i =0;i<v.GetTotalRow();i++){
@@ -79,7 +79,7 @@ public class Operations{
     	}
     	return new Matrix(y);
     }
-    public static Matrix ScalerDivide(Matrix v, double k){
+    public static Matrix ScalerDivideRight(Matrix v, double k){
         // left divides a matrix
     	double y[][] = v.Pull();
     	for(int i =0;i<v.GetTotalRow();i++){

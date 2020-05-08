@@ -50,41 +50,40 @@ public class Matrix implements java.io.Serializable{
         return this.col;
     }
     public double[] PullRow(int n){
-    	// return a row of the given number
-        if(n>row || n<1){
-            throw new IllegalArgumentException("Dimensions out of bound.");
-        }
-        else{
-            return this.matrix[n-1];
-        }
+        // return a row of the given number
+        CheckRow(n);
+        return this.matrix[n-1];
     }
     public double[] PullCol(int n){
-    	// returns the column of given number
-        if(n>col|| n<1){
-            throw new IllegalArgumentException("Dimensions out of bound.");
-        }
-        else{
-            double s[]= new double[this.col];
-            for(int i = 0;i<row;i++)
-                s[i]= this.matrix[i][n-1];
-            return s;
+        // returns the column of given number
+        CheckColumn(n);
+        double s[]= new double[this.col];
+        for(int i = 0;i<row;i++)
+            s[i]= this.matrix[i][n-1];
+        return s;
+    }
+    // changes a row at RowNumber to the given array
+    public void PushRowAt(double[] r,int RowNumber){
+        CheckRow(RowNumber);
+        if(r.length!=this.row) throw new IllegalArgumentException("The array to be pushed must have same size as of the parent matrix.");
+        this.matrix[RowNumber-1] = r;
+    }
+    public void PushColAt(double[] r ,int ColNumber){
+        CheckColumn(ColNumber);
+        if(r.length!=this.col) throw new IllegalArgumentException("The array to be pushed must have same size as parent matrix.");
+        for(int i = 0;i<this.col;i++){
+            this.matrix[i][ColNumber-1] = r[i];
         }
     }
+    // sets the value of givenn row and column to val
     public void Value(int rows,int columns,double val){
-        if(rows-1>this.row || columns-1>this.col|| rows<1||columns<1){
-            throw new IllegalArgumentException("Dimension out of bound.");
-        }
-        else{
-            this.matrix[rows-1][columns-1] = val;
-        }
+        CheckRowAndCol(rows, columns);
+        this.matrix[rows-1][columns-1] = val;
     }
+    // return the element at nth row and jth column
     public double Get(int n,int j){
-        if(n-1>this.row || j-1>this.col|| j<1||n<1){
-            throw new IllegalArgumentException("Dimensions out of bound.");
-        }
-        else{
-            return this.matrix[n-1][j-1];
-        }
+        CheckRowAndCol(n,j);
+        return this.matrix[n-1][j-1];
     }
     public void PushRow(double GivenRow[]){
         //pushes a row at the end of the matrix
@@ -165,7 +164,6 @@ public class Matrix implements java.io.Serializable{
         String str ="[";
         for(double[] a : this.matrix){
             str += Arrays.toString(a);
-            str+=",";
         }
         str+="]";
         return str;
@@ -188,8 +186,48 @@ public class Matrix implements java.io.Serializable{
             }
         }
     }
+    //check whether to matrices are equal or not.
+    public boolean isEqual(Matrix y){
+        if(y.GetTotalRow()!=this.row || this.col!=y.GetTotalColumn()){
+            // since if order of the matrices are not equal they cannot be equal
+            return false;
+        }
+        for(int i = 0;i<this.row;i++){
+            for(int j = 0;j<this.col;j++){
+                if(this.matrix[i][j] != y.matrix[i][j]) return false;
+            }
+        }
+        return true;
+    }
+    public void sortRow(int RowNumber){
+        CheckRow(RowNumber);
+        Arrays.sort(this.matrix[RowNumber-1]);
+    }
+    public void sortCol(int ColNumber){
+        try{
+            double[] r = this.PullCol(ColNumber);
+            Arrays.sort(r);
+            this.PushColAt(r, ColNumber);
+        } catch(Exception e){
+            throw new IllegalArgumentException("Give a valid column number to sort."+ColNumber+ " is not valid.");
+        }
+    }
     public double Det(Matrix y){
 
         return 0;
+    }
+    private void CheckRow(int RowNumber){
+        if(RowNumber>this.row || RowNumber<1){
+            throw new IllegalArgumentException("Dimensions out of bound.");
+        }
+    }
+    private void CheckColumn(int ColNumber){
+        if(ColNumber>this.row || ColNumber<1){
+            throw new IllegalArgumentException("Dimensions out of bound.");
+        }
+    }
+    private void CheckRowAndCol(int RowNumber,int ColNumber){
+        CheckRow(RowNumber);
+        CheckColumn(ColNumber);
     }
 }
