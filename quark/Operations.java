@@ -38,6 +38,7 @@ public class Operations{
     	}
     }
     public static Matrix Multiply(double k,Matrix x){
+    	// multiply the given number to each and element of the matrix
         for(int i =1; i<=x.GetTotalRow();i++){
             for(int j = 1;j<=x.GetTotalColumn();j++){
                 x.Value(i, j,x.Get(i, j) * k);
@@ -67,5 +68,25 @@ public class Operations{
             Product =Multiply(Product, v[l]);
         }
        return Product;
+    }
+    public static Matrix ScalerDivideLeft(double k,Matrix v){
+        // right divides every elements in the matrix
+    	double y[][] = v.Pull();
+    	for(int i =0;i<v.GetTotalRow();i++){
+    		for(int j=0;j<v.GetTotalColumn();j++){
+    			y[i][j] = k/y[i][j];
+    		}
+    	}
+    	return new Matrix(y);
+    }
+    public static Matrix ScalerDivideRight(Matrix v, double k){
+        // left divides a matrix
+    	double y[][] = v.Pull();
+    	for(int i =0;i<v.GetTotalRow();i++){
+    		for(int j=0;j<v.GetTotalColumn();j++){
+    			y[i][j]/= k;
+    		}
+    	}
+    	return new Matrix(y);
     }
 }
