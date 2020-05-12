@@ -3,6 +3,7 @@ import quark.*;
 import static java.util.stream.IntStream.range;
 public class LU {
 	private static double[][] pivotize(double[][] m) {
+        // pivotizing a matrix
         int n = m.length;
         double[][] id = range(0, n).mapToObj(j -> range(0, n)
                 .mapToDouble(i -> i == j ? 1 : 0).toArray())
@@ -25,6 +26,11 @@ public class LU {
         }
         return id;
     }
+    // decomposes the pivotized matrix in a upper triangular and a lower triangular matrix.
+    // returns a array of matrices 
+    // first one is the lower triangular matrix
+    // second is the upper triangular matrix
+    // while tired one is pivotized matrix.
 	public static Matrix[] Decompose(Matrix v) {
 		int n = v.GetTotalRow();
 		if (n != v.GetTotalColumn()) {

@@ -224,18 +224,21 @@ public class Matrix implements java.io.Serializable{
            this.sortCol(i);
        }
     }
-    public double Det(Matrix y){
-
-        return 0;
+    public double Det(){
+        // returns the determinant of the matrix
+        if(this.row!=this.col){
+            throw new IllegalArgumentException("Determinant is only defined for square matrix."+ this +" is not a square matrix.");
+        }
+        return Determinant.Det(this);
     }
     private void CheckRow(int RowNumber){
         if(RowNumber>this.row || RowNumber<1){
-            throw new IllegalArgumentException("Dimensions out of bound.");
+            throw new IllegalArgumentException("Dimensions out of bound." + RowNumber+" is a invalid row number for " + this +".");
         }
     }
     private void CheckColumn(int ColNumber){
         if(ColNumber>this.col || ColNumber<1){
-            throw new IllegalArgumentException("Dimensions out of bound.");
+            throw new IllegalArgumentException("Dimensions out of bound." + ColNumber + " is a invalid column number for " + this + ".");
         }
     }
     private void CheckRowAndCol(int RowNumber,int ColNumber){
