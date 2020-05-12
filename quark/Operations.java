@@ -91,8 +91,13 @@ public class Operations{
     }
     public static Matrix Transpose(Matrix v){
         Matrix x = new Matrix(v.GetTotalColumn(),v.GetTotalRow());
-        for(int i = 1;i<=v.GetTotalColumn();i++){
-            x.PushRowAt(v.PullCol(i),i);
+        for(int i = 1;i<=x.GetTotalRow();i++){
+            for(int j = i;j<=x.GetTotalColumn();j++){
+                double val1 = v.Get(i,j);
+                double val2 = v.Get(j,i);
+                x.Value(i,j, val2);
+                x.Value(j,i, val1);
+            }
         }
         return x;
     }
