@@ -151,7 +151,7 @@ public class Matrix implements java.io.Serializable{
         return z;
     }
     // returns a string of all the elements in a matrix seprated by every row.
-    public String Print(){
+    public String print(){
         String str = new String();
         for(double[] a : this.matrix){
             str +=Arrays.toString(a);
