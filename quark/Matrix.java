@@ -168,6 +168,9 @@ public class Matrix implements java.io.Serializable{
         str+="]";
         return str;
     }
+    public double[][] toArray(){
+        return this.matrix;
+    }
     //return a long[][] whicn is rounded of version of the matrix
     public long[][] roundOff(){
         long[][] n = new long[this.row][this.row];
@@ -230,6 +233,16 @@ public class Matrix implements java.io.Serializable{
             throw new IllegalArgumentException("Determinant is only defined for square matrix."+ this +" is not a square matrix.");
         }
         return Determinant.Det(this);
+    }
+    // transposes the Matrix
+    public void Transpose(){
+        this.Copy(Operations.Transpose(this));
+    }
+    // copies a matrix into another
+    public void Copy(Matrix v){
+        this.row = v.GetTotalRow();
+        this.col = v.GetTotalColumn();
+        this.matrix = v.Pull();
     }
     private void CheckRow(int RowNumber){
         if(RowNumber>this.row || RowNumber<1){
