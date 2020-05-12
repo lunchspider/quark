@@ -1,5 +1,5 @@
 package quark;
-import java.util.Arrays;
+import java.util.*;
 import java.lang.Math;
 public class Matrix implements java.io.Serializable{
 	private static final long serialVersionUID = 1L;
@@ -151,7 +151,7 @@ public class Matrix implements java.io.Serializable{
         return z;
     }
     // returns a string of all the elements in a matrix seprated by every row.
-    public String Print(){
+    public String print(){
         String str = new String();
         for(double[] a : this.matrix){
             str +=Arrays.toString(a);
@@ -199,18 +199,30 @@ public class Matrix implements java.io.Serializable{
         }
         return true;
     }
+    // sorts a given row of the matrix
     public void sortRow(int RowNumber){
         CheckRow(RowNumber);
         Arrays.sort(this.matrix[RowNumber-1]);
     }
+    // sorts a given column of the matrix
     public void sortCol(int ColNumber){
         try{
-            double[] r = this.PullCol(ColNumber);
-            Arrays.sort(r);
-            this.PushColAt(r, ColNumber);
+            Arrays.sort(this.matrix,Comparator.comparingDouble(a -> a[ColNumber-1]));
         } catch(Exception e){
             throw new IllegalArgumentException("Give a valid column number to sort."+ColNumber+ " is not valid.");
         }
+    }
+    // sorts each and every row of the matrix
+    public void sortByRow(){
+        for(int i=0;i<this.row;i++){
+            Arrays.sort(this.matrix[i]);
+        }
+    }
+    // sorts each and every column of the matrix
+    public void sortByCol(){
+       for(int i = 1;i<=this.col;i++){
+           this.sortCol(i);
+       }
     }
     public double Det(Matrix y){
 
