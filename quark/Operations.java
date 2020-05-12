@@ -89,4 +89,11 @@ public class Operations{
     	}
     	return new Matrix(y);
     }
+    public static Matrix Transpose(Matrix v){
+        Matrix x = new Matrix(v.GetTotalColumn(),v.GetTotalRow());
+        for(int i = 1;i<=v.GetTotalColumn();i++){
+            x.PushRowAt(v.PullCol(i),i);
+        }
+        return x;
+    }
 }

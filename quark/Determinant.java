@@ -5,7 +5,7 @@ public class Determinant{
         if(x.GetTotalColumn()!=x.GetTotalRow()){
             return 0;
         }
-
+        
         return det;
     }
 }
