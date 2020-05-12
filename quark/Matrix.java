@@ -234,7 +234,7 @@ public class Matrix implements java.io.Serializable{
         }
     }
     private void CheckColumn(int ColNumber){
-        if(ColNumber>this.row || ColNumber<1){
+        if(ColNumber>this.col || ColNumber<1){
             throw new IllegalArgumentException("Dimensions out of bound.");
         }
     }
