@@ -232,7 +232,7 @@ public class Matrix implements java.io.Serializable{
         if(this.row!=this.col){
             throw new IllegalArgumentException("Determinant is only defined for square matrix."+ this +" is not a square matrix.");
         }
-        return Determinant.Det(this);
+        return Math.round(Determinant.Det(this));
     }
     // transposes the Matrix
     public void Transpose(){
