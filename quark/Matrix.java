@@ -1,7 +1,6 @@
 package quark;
 import java.io.*;
-import java.util.Arrays;
-import java.util.Comparator;
+import java.util.*;
 public class Matrix implements Serializable{
     private static final long serialVersionUID = 660376820408908112L;
     private double matrix[][];
@@ -38,7 +37,7 @@ public class Matrix implements Serializable{
         this.matrix = a.matrix;
     }
     public double[][] Pull(){
-    	return matrix;
+    	return (double[][])deepClone(this.matrix);
     }
     public int GetTotalRow(){
         return this.row;
@@ -49,7 +48,7 @@ public class Matrix implements Serializable{
     public double[] PullRow(int n){
         // return a row of the given number
         CheckRow(n);
-        return this.matrix[n-1];
+        return (double[]) deepClone(this.matrix[n-1]);
     }
     public double[] PullCol(int n){
         // returns the column of given number
@@ -57,13 +56,13 @@ public class Matrix implements Serializable{
         double s[]= new double[this.col];
         for(int i = 0;i<row;i++)
             s[i]= this.matrix[i][n-1];
-        return s;
+        return (double[]) deepClone(s);
     }
     // changes a row at RowNumber to the given array
     public void PushRowAt(double[] r,int RowNumber){
         CheckRow(RowNumber);
         if(r.length!=this.row) throw new IllegalArgumentException("The array to be pushed must have same size as of the parent matrix.");
-        this.matrix[RowNumber-1] = r;
+        this.matrix[RowNumber-1] = (double[]) deepClone(r);
     }
     public void PushColAt(double[] r ,int ColNumber){
         CheckColumn(ColNumber);
@@ -130,9 +129,9 @@ public class Matrix implements Serializable{
     public static Matrix IdentityMatrix(int n,int j){
         // Return a Identity Matrix of matrix of nxj where only diagonal elements are 1
         Matrix y = new Matrix(n,j);
-        for(int i =1;i<=n;i++){
-            for(int k = 1;k<=n;k++){
-                if(i==k){ y.Value(i, j,1);}
+        for(int i =0;i<n;i++){
+            for(int k = 0;k<n;k++){
+                if(i==k){ y.matrix[i][j] = 1;}
             }
         }
         return y;
@@ -166,7 +165,7 @@ public class Matrix implements Serializable{
         return str;
     }
     public double[][] toArray(){
-        return this.matrix;
+        return this.Pull();
     }
     //return a Matrix whicn is rounded of version of the matrix
     public Matrix roundOff(){
@@ -239,7 +238,7 @@ public class Matrix implements Serializable{
     public void Copy(Matrix v){
         this.row = v.GetTotalRow();
         this.col = v.GetTotalColumn();
-        this.matrix = v.Pull();
+        this.matrix = (double[][])deepClone(v.Pull());
     }
     private void CheckRow(int RowNumber){
         if(RowNumber>this.row || RowNumber<1){

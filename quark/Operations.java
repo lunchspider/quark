@@ -24,7 +24,7 @@ public class Operations{
             throw new ArrayIndexOutOfBoundsException("Can only add matrices of same order.");
         }
     }
-    public static Matrix Add(double k,Matrix v){
+    public static Matrix ScalerAdd(double k,Matrix v){
     	// adds <code> double k</code> to every number of the matrix
     	try{
     		for(int i = 1;i<=v.GetTotalRow();i++){
@@ -37,7 +37,7 @@ public class Operations{
     		throw new ArrayIndexOutOfBoundsException("Can only add matrices of same order.");
     	}
     }
-    public static Matrix Multiply(double k,Matrix x){
+    public static Matrix ScalerMultiply(double k,Matrix x){
     	// multiply the given number to each and element of the matrix
         for(int i =1; i<=x.GetTotalRow();i++){
             for(int j = 1;j<=x.GetTotalColumn();j++){
