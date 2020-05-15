@@ -1,8 +1,9 @@
 package quark;
-import java.util.*;
-import java.lang.Math;
-public class Matrix implements java.io.Serializable{
-	private static final long serialVersionUID = 1L;
+import java.io.*;
+import java.util.Arrays;
+import java.util.Comparator;
+public class Matrix implements Serializable{
+    private static final long serialVersionUID = 660376820408908112L;
     private double matrix[][];
     private int row,col;
     public Matrix(int rows,int columns){
@@ -16,29 +17,25 @@ public class Matrix implements java.io.Serializable{
     }
     public Matrix(double matr[][]){
         this(matr.length,matr[0].length);
-        this.matrix = matr;
+        this.matrix = (double[][]) deepClone(matr);
     }
     public Matrix(double matr[]){
         this(1,matr.length);
-        for(int i =1;i<=this.col;i++){
-            this.Value(1,i,matr[i-1]);
-        }
+        this.matrix[0] =(double[]) deepClone(matr);
     }
     public Matrix(int matr[][]){
         // creates the Matrix if an int array in given
         this(matr.length,matr[0].length);
-        for(int i = 0;i<this.row;i++){
-            for(int j = 0;j<this.col;j++){
-                this.matrix[i][j] = matr[i][j];
-            }
-        }
+        this.matrix = (double[][]) deepClone(matr);
     }
     public Matrix(int matr[]){
         // creates the Matrix if only one row is given
         this(1,matr.length);
-        for(int i =1;i<=this.col;i++){
-            this.Value(1,i,matr[i-1]);
-        }
+        this.matrix[0] =  (double[]) deepClone(matr);
+    }
+    public Matrix(Matrix a){
+        this(a.row,a.col);
+        this.matrix = a.matrix;
     }
     public double[][] Pull(){
     	return matrix;
@@ -168,12 +165,15 @@ public class Matrix implements java.io.Serializable{
         str+="]";
         return str;
     }
-    //return a long[][] whicn is rounded of version of the matrix
-    public long[][] roundOff(){
-        long[][] n = new long[this.row][this.row];
+    public double[][] toArray(){
+        return this.matrix;
+    }
+    //return a Matrix whicn is rounded of version of the matrix
+    public Matrix roundOff(){
+        Matrix n = new Matrix(this.row,this.row);
         for(int i = 0;i<this.row;i++){
             for(int j = 0;j<this.col;j++){
-                n[i][j] = Math.round(this.matrix[i][j]);
+                n.matrix[i][j] = Math.round(this.matrix[i][j]);
             }
         }
         return n;
@@ -229,7 +229,17 @@ public class Matrix implements java.io.Serializable{
         if(this.row!=this.col){
             throw new IllegalArgumentException("Determinant is only defined for square matrix."+ this +" is not a square matrix.");
         }
-        return Determinant.Det(this);
+        return Math.round(Determinant.Det(this));
+    }
+    // transposes the Matrix
+    public void Transpose(){
+        this.Copy(Operations.Transpose(this));
+    }
+    // copies a matrix into another
+    public void Copy(Matrix v){
+        this.row = v.GetTotalRow();
+        this.col = v.GetTotalColumn();
+        this.matrix = v.Pull();
     }
     private void CheckRow(int RowNumber){
         if(RowNumber>this.row || RowNumber<1){
@@ -245,4 +255,18 @@ public class Matrix implements java.io.Serializable{
         CheckRow(RowNumber);
         CheckColumn(ColNumber);
     }
+    private static Object deepClone(Object object) {
+        try {
+          ByteArrayOutputStream baos = new ByteArrayOutputStream();
+          ObjectOutputStream oos = new ObjectOutputStream(baos);
+          oos.writeObject(object);
+          ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+          ObjectInputStream ois = new ObjectInputStream(bais);
+          return ois.readObject();
+        }
+        catch (Exception e) {
+          e.printStackTrace();
+          return null;
+        }
+      }
 }

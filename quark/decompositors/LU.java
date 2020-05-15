@@ -5,9 +5,7 @@ public class LU {
 	private static double[][] pivotize(double[][] m) {
         // pivotizing a matrix
         int n = m.length;
-        double[][] id = range(0, n).mapToObj(j -> range(0, n)
-                .mapToDouble(i -> i == j ? 1 : 0).toArray())
-                .toArray(double[][]::new);
+        double[][] id = range(0, n).mapToObj(j -> range(0, n).mapToDouble(i -> i == j ? 1 : 0).toArray()).toArray(double[][]::new);
  
         for (int i = 0; i < n; i++) {
             double maxm = m[i][i];
