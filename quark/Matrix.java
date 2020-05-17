@@ -18,6 +18,7 @@ public class Matrix implements Serializable{
         this(matr.length,matr[0].length);
         this.matrix = (double[][]) deepClone(matr);
     }
+    // intiates a matrix only having a row
     public Matrix(double matr[]){
         this(1,matr.length);
         this.matrix[0] =(double[]) deepClone(matr);
@@ -31,6 +32,14 @@ public class Matrix implements Serializable{
         // creates the Matrix if only one row is given
         this(1,matr.length);
         this.matrix[0] =  (double[]) deepClone(matr);
+    }
+    public Matrix(long matr[][]){
+        this(matr.length,matr[0].length);
+        this.matrix = (double[][])deepClone(matr);
+    }
+    public Matrix(long matr[]){
+        this(1,matr.length);
+        this.matrix[0] = (double[]) deepClone(matr);
     }
     public Matrix(Matrix a){
         this(a.row,a.col);
@@ -71,13 +80,13 @@ public class Matrix implements Serializable{
             this.matrix[i][ColNumber-1] = r[i];
         }
     }
-    // sets the value of givenn row and column to val
-    public void Value(int rows,int columns,double val){
+    // sets the set of givenn row and column to val
+    public void set(int rows,int columns,double val){
         CheckRowAndCol(rows, columns);
         this.matrix[rows-1][columns-1] = val;
     }
     // return the element at nth row and jth column
-    public double Get(int n,int j){
+    public double get(int n,int j){
         CheckRowAndCol(n,j);
         return this.matrix[n-1][j-1];
     }
@@ -122,7 +131,7 @@ public class Matrix implements Serializable{
         // return a matrix with all elements equal 1
         Matrix y = new Matrix(order);
         for(int i = 1;i<=order;i++){
-            y.Value(i, i, 1);
+            y.set(i, i, 1);
         }
         return y;
     }
@@ -141,7 +150,7 @@ public class Matrix implements Serializable{
         Matrix z = new Matrix(EndRow-StartColumn +1,EndColumn-StartColumn +1);
         for(int i = StartRow;i<=EndRow;i++){
             for(int j = StartColumn;j<=EndColumn;j++){
-                z.Value(i-StartRow+1,j-StartColumn+1,y.Get(i,j));
+                z.set(i-StartRow+1,j-StartColumn+1,y.get(i,j));
             }
         }
         return z;
@@ -156,6 +165,7 @@ public class Matrix implements Serializable{
         return str;
     }
     // returns a string of the given Matrix
+    @Override
     public String toString(){
         String str ="[";
         for(double[] a : this.matrix){
@@ -186,7 +196,7 @@ public class Matrix implements Serializable{
         }
     }
     //check whether to matrices are equal or not.
-    public boolean isEqual(Matrix y){
+    public boolean equals(Matrix y){
         if(y.GetTotalRow()!=this.row || this.col!=y.GetTotalColumn()){
             // since if order of the matrices are not equal they cannot be equal
             return false;
