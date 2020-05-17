@@ -11,7 +11,7 @@ public class Operations{
                 if(x.GetTotalColumn()==ColCount && x.GetTotalRow()== RowCount){
                     for(int i = 1; i<= RowCount;i++){
                         for(int j =  1;j<= ColCount;j++){
-                            y.Value(i, j,y.Get(i, j) + x.Get(i, j));
+                            y.set(i, j,y.get(i, j) + x.get(i, j));
                         }
                     }
                 }
@@ -29,7 +29,7 @@ public class Operations{
     	try{
     		for(int i = 1;i<=v.GetTotalRow();i++){
     			for(int j =1;j<=v.GetTotalColumn();j++){
-    				v.Value(i,j,v.Get(i,j)+k);
+    				v.set(i,j,v.get(i,j)+k);
     			}
     		}
     		return v;
@@ -41,7 +41,7 @@ public class Operations{
     	// multiply the given number to each and element of the matrix
         for(int i =1; i<=x.GetTotalRow();i++){
             for(int j = 1;j<=x.GetTotalColumn();j++){
-                x.Value(i, j,x.Get(i, j) * k);
+                x.set(i, j,x.get(i, j) * k);
             }
         }
         return x;
@@ -52,7 +52,7 @@ public class Operations{
             for(int i = 1;i<=Product.GetTotalRow();i++){
                 for(int j = 1;j<=Product.GetTotalColumn();j++){
                     for(int k = 1;k<=x.GetTotalColumn();k++){
-                        Product.Value(i, j, Product.Get(i, j) + x.Get(i, k) * y.Get(k, j));
+                        Product.set(i, j, Product.get(i, j) + x.get(i, k) * y.get(k, j));
                     }
                 }
             }
@@ -93,8 +93,8 @@ public class Operations{
         Matrix x = new Matrix(v.GetTotalColumn(),v.GetTotalRow());
         for(int i = 1;i<=x.GetTotalRow();i++){
             for(int j = i;j<=x.GetTotalColumn();j++){
-                x.Value(i,j, v.Get(j,i));
-                x.Value(j,i, v.Get(i,j));
+                x.set(i,j, v.get(j,i));
+                x.set(j,i, v.get(i,j));
             }
         }
         return x;
