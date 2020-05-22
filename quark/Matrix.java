@@ -1,7 +1,7 @@
 package quark;
 import java.io.*;
 import java.util.*;
-public class Matrix implements Serializable{
+public class Matrix implements Serializable {
     private static final long serialVersionUID = 660376820408908112L;
     private double matrix[][];
     private int row,col;
@@ -18,28 +18,54 @@ public class Matrix implements Serializable{
         this(matr.length,matr[0].length);
         this.matrix = (double[][]) deepClone(matr);
     }
-    // intiates a matrix only having a row
+    /**
+     * 
+     * @param matr
+     * makes a column matrix
+     */
     public Matrix(double matr[]){
+        this(matr.length,1);
+        for(int i =0;i<this.col;i++)
+            this.matrix[i][0] = matr[i];
+    }
+    /**
+     * 
+     * @param matr
+     * @param isRowMatrix
+     * Creates a row matrix.
+     */
+    public Matrix(double matr[],boolean isRowMatrix){
         this(1,matr.length);
-        this.matrix[0] =(double[]) deepClone(matr);
+        this.matrix[0] = (double[]) deepClone(matr);
     }
     public Matrix(int matr[][]){
         // creates the Matrix if an int array in given
         this(matr.length,matr[0].length);
         this.matrix = (double[][]) deepClone(matr);
     }
+
     public Matrix(int matr[]){
-        // creates the Matrix if only one row is given
-        this(1,matr.length);
-        this.matrix[0] =  (double[]) deepClone(matr);
+        this(matr.length,1);
+        for(int i=0;i<this.col;i++)
+            this.matrix[i][0] = matr[i];
+    }
+
+    public Matrix(int matr[],boolean isRowMatrix){
+        this(matr.length,1);
+        this.matrix[0] = (double[]) deepClone(matr);
     }
     public Matrix(long matr[][]){
         this(matr.length,matr[0].length);
         this.matrix = (double[][])deepClone(matr);
     }
     public Matrix(long matr[]){
+        this(matr.length,1);
+        for(int i = 0;i<this.col;i++) 
+            this.matrix[0][i] = matr[i];
+    }
+    public Matrix(long matr[],boolean isRowMatrix){
         this(1,matr.length);
-        this.matrix[0] = (double[]) deepClone(matr);
+        this.matrix[0]= (double[]) deepClone(matr);
     }
     public Matrix(Matrix a){
         this(a.row,a.col);
@@ -168,8 +194,9 @@ public class Matrix implements Serializable{
     @Override
     public String toString(){
         String str ="[";
-        for(double[] a : this.matrix){
-            str += Arrays.toString(a);
+        for(int i=0;i<this.row;i++){
+            str+= Arrays.toString(this.matrix[i]);
+            if(i<this.row-1) str+=",";
         }
         str+="]";
         return str;
