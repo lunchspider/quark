@@ -25,7 +25,7 @@ public class Matrix implements Serializable {
      */
     public Matrix(double matr[]){
         this(matr.length,1);
-        for(int i =0;i<this.col;i++)
+        for(int i =0;i<this.row;i++)
             this.matrix[i][0] = matr[i];
     }
     /**
@@ -277,6 +277,70 @@ public class Matrix implements Serializable {
         this.col = v.GetTotalColumn();
         this.matrix = (double[][])deepClone(v.Pull());
     }
+
+
+    public Boolean isSingle(){
+        if(this.row== 1 && this.col == 1) 
+            return true;
+        return false;
+    }
+
+    public Boolean isRow(){
+        if(this.row==1){
+            return true;
+        }
+        return false;
+    }
+
+    public Boolean isColummn(){
+        if(this.col==1){
+            return true;
+        }
+        return false;
+    }
+
+    public Boolean isSquare(){
+        if(this.row == this.col){
+            return true;
+        }
+        return false;
+    }
+
+    public Boolean isDiagonal(){
+        if(!(this.isSquare())){
+            return false;
+        }
+        int zerocount = 0;
+        for(double[] a : matrix){
+            for(double k : a){
+                if(k==0){
+                    ++zerocount;
+                }
+            }
+        }
+        if(zerocount + this.row == this.row * this.col){
+            return true;
+        }
+        return false;
+    }
+
+    public Boolean isAdditive(Matrix v){
+        if(this.row == v.row && this.col ==v.col){
+            return true;
+        }
+        return false;
+    }
+
+    public Boolean isSymmetric(){
+        if(this == Operations.Transpose(this)){
+            return true;
+        }
+        return false;
+    }
+
+
+    
+
     private void CheckRow(int RowNumber){
         if(RowNumber>this.row || RowNumber<1){
             throw new IllegalArgumentException("Dimensions out of bound." + RowNumber+" is a invalid row number for " + this +".");
